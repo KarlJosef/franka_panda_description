@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="panda">
+  <xacro:macro name="kinect" params="connected_to:='' name:=''">
+
+  <!-- https://aisgit.informatik.uni-freiburg.de/kollmitz/robotino-ros-pkg/-/blob/d539e32b16547c750a1fd3d4f47c3857920da6bb/robotino_description/sensors/urdf/kinect.urdf.xacro -->
+
+  <xacro:property name="KINECT_LENGTH" value="0.1"/>
+  <xacro:property name="KINECT_HEIGHT" value="0.1"/>
+  <xacro:property name="KINECT_WIDTH" value="0.1"/>
+  <xacro:property name="M_PI" value="3.1415926"/>
+
+
+    <joint name="${name}_joint" type="fixed">
+      <origin xyz="0.1 -0.05 0.1" rpy="${M_PI/1.25} ${-M_PI/2} ${-10*M_PI/180.0}"/>
+      <parent link="${connected_to}"/>
+      <child link="${name}_link" />
+    </joint>
+
+    <link name="${name}_link">
+      <inertial>
+        <mass value="0.00001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0" />
+      </inertial>
+
+      <visual name="visual">
+        <origin rpy="0.0 0 0" xyz="0 0 0"/>
+        <geometry>
+            <!--box size="${KINECT_LENGTH} ${KINECT_HEIGHT} ${KINECT_WIDTH}"/-->
+            <mesh filename="package://franka_panda_description/meshes/visual/kinect.dae"/>
+        </geometry>
+      </visual>
+
+      <!--collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <box size="${KINECT_LENGTH} ${KINECT_HEIGHT} ${KINECT_WIDTH}"/>
+        </geometry>
+      </collision-->
+    </link>
+
+    <!-- <joint name="${name}_frame_joint" type="fixed"> -->
+    <!--   <origin xyz="0 0 0" rpy="${M_PI/2} -${M_PI/2} 0" />  -->
+    <!--   <parent link="${name}_link"/> -->
+    <!--   <child link="${name}_frame"/> -->
+    <!-- </joint> -->
+
+    <!-- <link name="${name}_frame"/> -->
+
+    <!-- gazebo extensions -->
+  </xacro:macro>
+
+</robot>
