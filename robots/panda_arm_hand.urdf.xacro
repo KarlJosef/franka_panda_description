@@ -3,7 +3,7 @@
   <xacro:arg name="robot_name" default="panda"/>
   <xacro:arg name="load_gripper" default="False"/>
   <xacro:arg name="load_gazebo" default="false"/>
-  <xacro:arg name="load_rgbd" default="true"/>
+  <xacro:arg name="load_rgbd_camera" default="true"/>
 
   <xacro:include filename="$(find franka_panda_description)/robots/panda_arm.xacro"/>
 
@@ -12,7 +12,7 @@
     <xacro:hand ns="panda" rpy="0 0 ${-pi/4}" connected_to="panda_link8"/>
   </xacro:if>
 
-  <xacro:if value="$(arg load_rgbd)">
+  <xacro:if value="$(arg load_rgbd_camera)">
     <xacro:include filename="$(find franka_panda_description)/robots/kinect.urdf.xacro"/>
     <xacro:kinect connected_to="panda_link7" name='kinect'/>
   </xacro:if>
@@ -25,7 +25,7 @@
     <xacro:panda_gazebo robot_name="$(arg robot_name)" load_gripper="$(arg load_gripper)"/>
     <xacro:panda_transmission robot_name="$(arg robot_name)" load_gripper="$(arg load_gripper)"/>
 
-    <xacro:if value="$(arg load_rgbd)">
+    <xacro:if value="$(arg load_rgbd_camera)">
       <xacro:kinect_gazebo name="kinect" ros_topic="kinect_test" />
     </xacro:if>
 
